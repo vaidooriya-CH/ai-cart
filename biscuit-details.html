@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biscuit Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="details-page">
+        <h1>Biscuit</h1>
+        <img src="biscuit.jpg" alt="Biscuit" class="product-image">
+
+        <p><strong>Price:</strong> $2.50</p>
+        <p><strong>Description:</strong> Crunchy and delicious biscuits, perfect for tea time.</p>
+        <p><strong>Batch No.:</strong> BSC12345</p>
+        <p><strong>Expiry Date:</strong> <span id="expiry-date">2025-06-10</span></p>
+
+        <div id="alert-expired" class="expired-alert"></div>
+
+        <button onclick="speakDetails()" class="speak-button">🔊 Speak Details</button>
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        function checkExpiry() {
+            let expiryDate = new Date(document.getElementById("expiry-date").innerText);
+            let today = new Date();
+
+            if (expiryDate < today) {
+                document.getElementById("alert-expired").innerHTML = "⚠️ <strong>Alert:</strong> This product is expired!";
+                document.getElementById("alert-expired").style.color = "red";
+            }
+        }
+
+        function speakDetails() {
+            let productName = "Biscuit";
+            let price = "2 dollars and 50 cents";
+            let description = "Crunchy and delicious biscuits, perfect for tea time.";
+            let batchNo = "BSC12345";
+            let expiry = document.getElementById("expiry-date").innerText;
+            let alertMessage = "";
+
+            if (new Date(expiry) < new Date()) {
+                alertMessage = "Alert! This product is expired!";
+            }
+
+            let message = `Product Name: ${productName}. Price: ${price}. Description: ${description}. Batch Number: ${batchNo}. Expiry Date: ${expiry}. ${alertMessage}`;
+
+            let speech = new SpeechSynthesisUtterance(message);
+            speech.lang = "en-US";
+            window.speechSynthesis.speak(speech);
+        }
+
+        checkExpiry();
+    </script>
+</body>
+</html>

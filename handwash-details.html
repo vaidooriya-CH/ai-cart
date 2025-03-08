@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwash Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="details-page">
+        <h1>Handwash</h1>
+        <img src="handwash.jpg" alt="Handwash" class="product-image">
+
+        <p><strong>Price:</strong> $3.20</p>
+        <p><strong>Description:</strong> Antibacterial handwash to keep hands clean and germ-free.</p>
+        <p><strong>Batch No.:</strong> HW78901</p>
+        <p><strong>Expiry Date:</strong> <span id="expiry-date">2024-12-15</span></p>
+
+        <div id="alert-expired" class="expired-alert"></div>
+
+        <button onclick="speakDetails()" class="speak-button">🔊 Speak Details</button>
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        function checkExpiry() {
+            let expiryDate = new Date(document.getElementById("expiry-date").innerText);
+            let today = new Date();
+
+            if (expiryDate < today) {
+                document.getElementById("alert-expired").innerHTML = "⚠️ <strong>Alert:</strong> This product is expired!";
+                document.getElementById("alert-expired").style.color = "red";
+            }
+        }
+
+        function speakDetails() {
+            let message = "Product Name: Handwash. Price: 3 dollars and 20 cents. Description: Antibacterial handwash to keep hands clean and germ-free. Batch Number: HW78901. Expiry Date: " 
+                        + document.getElementById("expiry-date").innerText;
+            
+            if (new Date(document.getElementById("expiry-date").innerText) < new Date()) {
+                message += ". Alert! This product is expired!";
+            }
+
+            let speech = new SpeechSynthesisUtterance(message);
+            speech.lang = "en-US";
+            window.speechSynthesis.speak(speech);
+        }
+
+        checkExpiry();
+    </script>
+</body>
+</html>

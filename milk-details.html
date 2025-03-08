@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="details-page">
+        <h1>Milk</h1>
+        <img src="milk.jpg" alt="Milk" class="product-image">
+
+        <p><strong>Price:</strong> $1.80</p>
+        <p><strong>Description:</strong> Fresh dairy milk, rich in calcium and nutrients.</p>
+        <p><strong>Batch No.:</strong> MLK56789</p>
+        <p><strong>Expiry Date:</strong> <span id="expiry-date">2025-03-20</span></p>
+
+        <div id="alert-expired" class="expired-alert"></div>
+
+        <button onclick="speakDetails()" class="speak-button">🔊 Speak Details</button>
+        <a href="index.html" class="back-button">Back to Home</a>
+    </div>
+
+    <script>
+        function checkExpiry() {
+            let expiryDate = new Date(document.getElementById("expiry-date").innerText);
+            let today = new Date();
+
+            if (expiryDate < today) {
+                document.getElementById("alert-expired").innerHTML = "⚠️ <strong>Alert:</strong> This product is expired!";
+                document.getElementById("alert-expired").style.color = "red";
+            }
+        }
+
+        function speakDetails() {
+            let message = "Product Name: Milk. Price: 1 dollar and 80 cents. Description: Fresh dairy milk, rich in calcium and nutrients. Batch Number: MLK56789. Expiry Date: " 
+                        + document.getElementById("expiry-date").innerText;
+            
+            if (new Date(document.getElementById("expiry-date").innerText) < new Date()) {
+                message += ". Alert! This product is expired!";
+            }
+
+            let speech = new SpeechSynthesisUtterance(message);
+            speech.lang = "en-US";
+            window.speechSynthesis.speak(speech);
+        }
+
+        checkExpiry();
+    </script>
+</body>
+</html>
